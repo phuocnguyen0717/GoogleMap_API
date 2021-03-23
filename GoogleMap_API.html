@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        function initMap() {
+            var utc2 =  new google.maps.LatLng(10.845851060698092, 106.79453880824641);
+            var myHome = new google.maps.LatLng(10.83084629401508, 106.68207492616214);
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 20,
+                center: utc2,
+                
+            });
+            const marker = new google.maps.Marker({
+                position: utc2,
+                map: map,       
+                icon: "mySchool.png",
+            });
+            const infoUTC = new google.maps.InfoWindow({
+                content: "<b>PHÂN HIỆU TRƯỜNG ĐẠI HỌC GIAO THÔNG VẬN TẢI TẠI TPHCM</b></br>450, 451 Lê Văn Việt, Tăng Nhơn Phú A, quân 9, TPHCM",
+            });
+            marker.addListener("click", () => {infoUTC.open(map, marker);});
+
+            const marker1 = new google.maps.Marker({
+                position: myHome,
+                map: map,    
+                icon: "myPicture.jpg",
+            });
+            const infoMe = new google.maps.InfoWindow({
+                content: "<b>Họ Tên: Nguyễn Quang Phước</b> </br> Mã sinh viên: 5951071080 </br> Tuổi: 21</br> Ngày sinh: 17-4-2000</br>Quê quán: Daklak</br>Email: pnhesi@gmail.com ",
+            });
+            marker1.addListener("click", () => {infoMe.open(map, marker1);});
+            directionsRenderer.setMap(map);
+            var request = {
+              origin: utc2,
+              destination: myHome,
+              travelMode: 'WALKING'
+          };
+          directionsService.route(request, function (response, status) {
+              if (status == 'OK') {
+                  directionsRenderer.setDirections(response);
+            
+              }
+          });
+        }
+               
+    
+    
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
+</head>
+
+<body>
+    
+    <div id="map"></div>
+
+    
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"
+        async></script>
+</body>
+
+</html>
